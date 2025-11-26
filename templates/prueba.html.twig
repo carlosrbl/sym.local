@@ -15,10 +15,6 @@
 			<p>Hola mundo !!</p>
 		{% endif %}
 		<p>{{ saludo }}!!</p>
-		<ul>
-			{% for nombre in nombres %}
-				<li>{{ nombre|upper }}</li>
-			{% endfor %}
-		</ul>
+		{% include 'parts/nombres.part.html.twig' with {'nombres':nombres} %}
 	</body>
 </html>

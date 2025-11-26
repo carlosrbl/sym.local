@@ -5,9 +5,17 @@ controllers:
     type: attribute
 
 index:
-    path: /
+    path: /pruebas
     controller: App\Controller\DefaultController::index
 
+index1:
+    path: /uno
+    controller: App\Controller\DefaultController::index1
+
+index2:
+    path: /dos
+    controller: App\Controller\DefaultController::index2
+
 imagenes:
-    path: imagenes
+    path: /
     controller: App\Controller\ProyectoController::index
