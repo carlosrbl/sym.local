@@ -7,3 +7,7 @@ controllers:
 index:
     path: /
     controller: App\Controller\DefaultController::index
+
+imagenes:
+    path: imagenes
+    controller: App\Controller\ProyectoController::index

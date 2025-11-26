@@ -2,13 +2,19 @@
 
 namespace App\Controller;
 
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class DefaultController extends AbstractController
 {
     public function index()
     {
-        return $this->render('prueba.html.twig');
+        $nombre = 'Carlos';
+        $saludo = 'Buenos días';
+        $nombres = [ 'Ana','Enrique','Laura','Pablo' ];
+        return $this->render('prueba.html.twig', [
+            'nombre' => $nombre,
+            'saludo' => $saludo,
+            'nombres' => $nombres
+        ]);
     }
 }
