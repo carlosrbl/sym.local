@@ -4,9 +4,11 @@ namespace App\Controller;
 
 use App\Entity\Imagen;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Routing\Annotation\Route;
 
 class ProyectoController extends AbstractController
 {
+    #[Route('/', name: 'sym_index')]
     public function index()
     {
         $imagenesHome[] = new Imagen('1.jpg', 'descripción imagen 1', 1, 456, 610, 130);

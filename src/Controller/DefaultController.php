@@ -3,10 +3,12 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Routing\Annotation\Route;
 
 class DefaultController extends AbstractController
 {
-    public function index()
+    #[Route('/index1', name: 'sym_index1')]
+    public function index1()
     {
         $nombre = 'Carlos';
         $saludo = 'Buenos días';
@@ -17,11 +19,13 @@ class DefaultController extends AbstractController
             'nombres' => $nombres
         ]);
     }
-    public function index1()
+    #[Route('/index2', name: 'sym_index2')]
+    public function index2()
     {
         return $this->render('prueba1.html.twig');
     }
-    public function index2()
+     #[Route('/index3', name: 'sym_index3')]
+    public function index3()
     {
         $nombre = 'Juan';
         $saludo = 'Buenos días a todos';
