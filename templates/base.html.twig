@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<html lang="es">
 <html>
 	<head>
 		<meta charset="UTF-8">
@@ -32,19 +33,14 @@
 								    <![endif]-->
 		</head>
 			<body id="page-top" style="min-height: 100vh; display: grid;"> {% block navegacion %}
-				{% include 'navegacion.part.php' %}
+				{% include 'navegacion.part.html.twig' %}
 			{% endblock %}
 			{% block principal %}
 				<header>
 					<h1>
-						Prueba del uso de bloques
+						Página en pruebas
 					</h1>
 				</header>
-				<main>
-					<p>
-						Este es el contenido principal
-					</p>
-				</main>
 			{% endblock %}
 			<footer class="home-page">
 				{% block footer %}
