@@ -29,7 +29,32 @@ class ProyectoController extends AbstractController
         ]);
     }
     #[Route('/about', name: 'sym_about')]
-    public function about() {}
+    public function about() 
+    {
+        $imagenesClientes[] = new Imagen('client1.jpg', 'Client 1', 'MISS BELLA');
+        $imagenesClientes[] = new Imagen('client2.jpg', 'Client 2', 'DON PENO');
+        $imagenesClientes[] = new Imagen('client3.jpg', 'Client 3', 'SWEETY');
+        $imagenesClientes[] = new Imagen('client4.jpg', 'Client 4', 'LADY');
+
+        return $this->render('about.view.html.twig', [
+            'imagenes' => $imagenesClientes
+        ]);
+    }
+    #[Route('/blog', name: 'sym_blog')]
+    public function blog() 
+    {
+        return $this->render('blog.view.html.twig');
+    }
+    #[Route('/single_post', name: 'sym_single_post')]
+    public function single_post() 
+    {
+        return $this->render('single_post.view.html.twig');
+    }
+    #[Route('/contact', name: 'sym_contact')]
+    public function contact() 
+    {
+        return $this->render('contact.view.html.twig');
+    }
     #[Route('/registro', name: 'sym_registro')]
     public function registro() {}
     #[Route('/login', name: 'sym_login')]
@@ -42,8 +67,4 @@ class ProyectoController extends AbstractController
     public function asociados() {}
     #[Route('/logout', name: 'sym_logout')]
     public function logout() {}
-    #[Route('/blog', name: 'sym_blog')]
-    public function blog() {}
-    #[Route('/contact', name: 'sym_contact')]
-    public function contact() {}
 }
