@@ -2,43 +2,34 @@
 
 namespace App\Entity;
 
-use App\Entity\IEntity;
+use App\Repository\ImagenRepository;
+use Doctrine\ORM\Mapping as ORM;
 
-class Imagen implements IEntity
+#[ORM\Entity(repositoryClass: ImagenRepository::class)]
+class Imagen
 {
-    const RUTA_IMAGENES_PORTFOLIO = 'images/index/portfolio/';
-    const RUTA_IMAGENES_GALERIA = 'images/index/gallery/';
-    const RUTA_IMAGENES_CLIENTES = 'images/clients/';
-    const RUTA_IMAGENES_SUBIDAS = 'images/subidas/';
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $id = null;
 
-    /**
-     * @var int
-     */
-    private $id;
-    /**
-     * @var string
-     */
-    private $nombre;
-    /**
-     * @var string
-     */
-    private $descripcion;
-    /**
-     * @var int
-     */
-    private $categoria;
-    /**
-     * @var int
-     */
-    private $numVisualizaciones;
-    /**
-     * @var int
-     */
-    private $numLikes;
-    /**
-     * @var int
-     */
-    private $numDownloads;
+    #[ORM\Column(length: 50)]
+    private ?string $nombre = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $descripcion = null;
+
+    #[ORM\Column]
+    private ?int $categoria = null;
+
+    #[ORM\Column]
+    private ?int $numVisualizaciones = null;
+
+    #[ORM\Column]
+    private ?int $numLikes = null;
+
+    #[ORM\Column]
+    private ?int $numDownloads = null;
 
     public function __construct($nombre = "", $descripcion = "", $categoria = 1, $numVisualizaciones = 0, $numLikes = 0, $numDownloads = 0)
     {
@@ -50,125 +41,89 @@ class Imagen implements IEntity
         $this->numLikes = $numLikes;
         $this->numDownloads = $numDownloads;
     }
-    public function toArray(): array
-    {
-        return [
-            'id' => $this->getId(),
-            'nombre' => $this->getNombre(),
-            'descripcion' => $this->getDescripcion(),
-            'numVisualizaciones' => $this->getNumVisualizaciones(),
-            'numLikes' => $this->getNumLikes(),
-            'numDownloads' => $this->getNumDownloads(),
-            'categoria' => $this->getCategoria()
-        ];
-    }
-    /**
-     * @return int
-     */
-    public function getID(): ?int
+
+    public function getId(): ?int
     {
         return $this->id;
     }
-    /**
-     * @return string
-     */
+
     public function getNombre(): ?string
     {
         return $this->nombre;
     }
-    /**
-     * @param $nombre
-     * @return Imagen
-     */
-    public function setNombre($nombre): Imagen
+
+    public function setNombre(string $nombre): static
     {
         $this->nombre = $nombre;
+
         return $this;
     }
-    /**
-     * @return string
-     */
+
     public function getDescripcion(): ?string
     {
         return $this->descripcion;
     }
-    /**
-     * @param $descripcion
-     * @return Imagen
-     */
-    public function setDescripcion($descripcion): Imagen
+
+    public function setDescripcion(?string $descripcion): static
     {
         $this->descripcion = $descripcion;
+
         return $this;
     }
-    /**
-     * @return int
-     */
+
     public function getCategoria(): ?int
     {
         return $this->categoria;
     }
-    /**
-     * @param $categoria
-     * @return Imagen
-     */
-    public function setCategoria($categoria): Imagen
+
+    public function setCategoria(int $categoria): static
     {
         $this->categoria = $categoria;
+
         return $this;
     }
-    /**
-     * @return int
-     */
+
     public function getNumVisualizaciones(): ?int
     {
         return $this->numVisualizaciones;
     }
-    /**
-     * @param $numVisualizaciones
-     * @return Imagen
-     */
-    public function setNumVisualizaciones($numVisualizaciones): Imagen
+
+    public function setNumVisualizaciones(int $numVisualizaciones): static
     {
         $this->numVisualizaciones = $numVisualizaciones;
+
         return $this;
     }
-    /**
-     * @return int
-     */
+
     public function getNumLikes(): ?int
     {
         return $this->numLikes;
     }
-    /**
-     * @param $numLikes
-     * @return Imagen
-     */
-    public function setNumLikes($numLikes): Imagen
+
+    public function setNumLikes(int $numLikes): static
     {
         $this->numLikes = $numLikes;
+
         return $this;
     }
-    /**
-     * @return int
-     */
+
     public function getNumDownloads(): ?int
     {
         return $this->numDownloads;
     }
-    /**
-     * @param $numDownloads
-     * @return Imagen
-     */
-    public function setNumDownloads($numDownloads): Imagen
+
+    public function setNumDownloads(int $numDownloads): static
     {
         $this->numDownloads = $numDownloads;
+
         return $this;
     }
-    public function __toString(): string
-    {
-        return $this->descripcion;
-    }
+
+    const RUTA_IMAGENES_PORTFOLIO = 'images/index/portfolio/';
+    const RUTA_IMAGENES_GALERIA = 'images/index/gallery/';
+    const RUTA_IMAGENES_CLIENTES = 'images/clients/';
+    const RUTA_IMAGENES_SUBIDAS = 'images/subidas/';
+
     public function getUrlPortfolio(): string
     {
         return self::RUTA_IMAGENES_PORTFOLIO . $this->getNombre();

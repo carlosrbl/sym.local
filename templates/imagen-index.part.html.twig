@@ -7,12 +7,12 @@
 		{% for imagen in imagenes %}
 			<div class="col-xs-12 col-sm-6 col-md-3">
 				<div class="sol">
-					<img class="img-responsive" src="{{ asset(imagen.getUrlPortfolio()) }}" alt="First category picture"/>
+					<img class="img-responsive" src="{{ asset(imagen.getUrlSubidas()) }}" alt="First category picture"/>
 					<div class="behind">
 						<div class="head text-center">
 							<ul class="list-inline">
 								<li>
-									<a class="gallery" href="" data-toggle="tooltip" data-original-title="Quick View">
+									<a class="gallery" href="{{ asset(imagen.getUrlSubidas()) }}" data-toggle="tooltip" data-original-title="Quick View">
 										<i class="fa fa-eye"></i>
 									</a>
 								</li>

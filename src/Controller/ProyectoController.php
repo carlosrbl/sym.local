@@ -2,69 +2,59 @@
 
 namespace App\Controller;
 
-use App\Entity\Imagen;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
+use Doctrine\Persistence\ManagerRegistry;
+use App\Entity\Imagen;
 
-class ProyectoController extends AbstractController
+final class ProyectoController extends AbstractController
 {
-    #[Route('/', name: 'sym_index')]
-    public function index()
+    #[Route('/', name: 'app_index')]
+    public function index(ManagerRegistry $doctrine): Response
     {
-        $imagenesHome[] = new Imagen('1.jpg', 'descripción imagen 1', 1, 456, 610, 130);
-        $imagenesHome[] = new Imagen('2.jpg', 'descripción imagen 2', 1, 600, 610, 130);
-        $imagenesHome[] = new Imagen('3.jpg', 'descripción imagen 3', 1, 456, 610, 130);
-        $imagenesHome[] = new Imagen('4.jpg', 'descripción imagen 4', 1, 456, 610, 130);
-        $imagenesHome[] = new Imagen('5.jpg', 'descripción imagen 5', 1, 456, 610, 130);
-        $imagenesHome[] = new Imagen('6.jpg', 'descripción imagen 6', 1, 456, 610, 130);
-        $imagenesHome[] = new Imagen('7.jpg', 'descripción imagen 7', 1, 456, 610, 130);
-        $imagenesHome[] = new Imagen('8.jpg', 'descripción imagen 8', 1, 456, 610, 130);
-        $imagenesHome[] = new Imagen('9.jpg', 'descripción imagen 9', 1, 456, 610, 130);
-        $imagenesHome[] = new Imagen('10.jpg', 'descripción imagen 10', 1, 456, 610, 130);
-        $imagenesHome[] = new Imagen('11.jpg', 'descripción imagen 11', 1, 456, 610, 130);
-        $imagenesHome[] = new Imagen('12.jpg', 'descripción imagen 12', 1, 456, 610, 130);
-
+        $imagenes = $doctrine->getRepository(Imagen::class)->findAll();
         return $this->render('index.view.html.twig', [
-            'imagenes' => $imagenesHome
+            'imagenes' => $imagenes
         ]);
     }
-    #[Route('/about', name: 'sym_about')]
-    public function about() 
+    #[Route('/about', name: 'app_about')]
+    public function about()
     {
-        $imagenesClientes[] = new Imagen('client1.jpg', 'Client 1', 'MISS BELLA');
-        $imagenesClientes[] = new Imagen('client2.jpg', 'Client 2', 'DON PENO');
-        $imagenesClientes[] = new Imagen('client3.jpg', 'Client 3', 'SWEETY');
-        $imagenesClientes[] = new Imagen('client4.jpg', 'Client 4', 'LADY');
+        $imagenesClientes[] = new Imagen('client1.jpg', 'MISS BELLA');
+        $imagenesClientes[] = new Imagen('client2.jpg', 'DON PENO');
+        $imagenesClientes[] = new Imagen('client3.jpg', 'SWEETY');
+        $imagenesClientes[] = new Imagen('client4.jpg', 'LADY');
 
         return $this->render('about.view.html.twig', [
             'imagenes' => $imagenesClientes
         ]);
     }
-    #[Route('/blog', name: 'sym_blog')]
-    public function blog() 
+    #[Route('/blog', name: 'app_blog')]
+    public function blog()
     {
         return $this->render('blog.view.html.twig');
     }
-    #[Route('/single_post', name: 'sym_single_post')]
-    public function single_post() 
+    #[Route('/single_post', name: 'app_single_post')]
+    public function single_post()
     {
         return $this->render('single_post.view.html.twig');
     }
-    #[Route('/contact', name: 'sym_contact')]
-    public function contact() 
+    #[Route('/contact', name: 'app_contact')]
+    public function contact()
     {
         return $this->render('contact.view.html.twig');
     }
-    #[Route('/registro', name: 'sym_registro')]
+    #[Route('/registro', name: 'app_registro')]
     public function registro() {}
-    #[Route('/login', name: 'sym_login')]
+    #[Route('/login', name: 'app_login')]
     public function login() {}
-    #[Route('/galeria', name: 'sym_galeria')]
+    #[Route('/galeria', name: 'app_galeria')]
     public function galeria() {}
-    #[Route('/exposiciones', name: 'sym_exposiciones')]
+    #[Route('/exposiciones', name: 'app_exposiciones')]
     public function exposiciones() {}
-    #[Route('/asociados', name: 'sym_asociados')]
+    #[Route('/asociados', name: 'app_asociados')]
     public function asociados() {}
-    #[Route('/logout', name: 'sym_logout')]
+    #[Route('/logout', name: 'app_logout')]
     public function logout() {}
 }
