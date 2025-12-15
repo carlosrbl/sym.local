@@ -119,6 +119,11 @@ class Imagen
         return $this;
     }
 
+    public function __toString(): string
+    {
+        return $this->descripcion;
+    }
+
     const RUTA_IMAGENES_PORTFOLIO = 'images/index/portfolio/';
     const RUTA_IMAGENES_GALERIA = 'images/index/gallery/';
     const RUTA_IMAGENES_CLIENTES = 'images/clients/';

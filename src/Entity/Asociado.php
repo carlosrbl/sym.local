@@ -71,6 +71,11 @@ class Asociado
         return $this;
     }
 
+    public function __toString(): string
+    {
+        return $this->descripcion;
+    }
+
     const RUTA_LOGOS_ASOCIADOS = '/public/images/asociados/';
 
     public function getUrlAsociados(): string
