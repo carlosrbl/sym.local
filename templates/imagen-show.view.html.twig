@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+{% block principal %}
+<!-- Principal Content Start -->
+<div id="galeria">
+	<div class="container">
+		<div class="col-xs-12 col-sm-8 col-sm-push-2">
+			<h1>IMAGEN GALERIA</h1>
+			<hr>
+			<div class="imagenes_galeria">
+				<img src="{{ asset(imagen.getUrlSubidas()) }}" alt="{{ imagen.getDescripcion() }}" title="{{ imagen.getDescripcion() }}" width="500px">
+				<br>
+				<br>Descripción:
+				{{ imagen.getDescripcion() }}
+				<br>Categoria:
+				{{ imagen.getCategoria() }}
+				<br>Número de visualizaciones:
+				{{ imagen.getNumVisualizaciones() }}
+				<br>Número de likes:
+				{{ imagen.getNumLikes() }}
+				<br>Número de downloads:
+				{{ imagen.getNumDownloads() }}
+				<br><br>
+				<div class="btn-group" role="group" aria-label="Basic example">
+					<button class="btn btn-warning" style="border: 1px solid black;">
+						<a style="color: black" href='/galeria/editar/<?= $imagen->getId() ?>'>
+							<i class="fa fa-pencil"></i>
+							EDITAR
+						</a>
+					</button>
+					<button class="btn btn-danger" style="border: 1px solid black;">
+						<a style="color: black" href='/galeria/borrar/<?= $imagen->getId() ?>' onclick="return confirm('¿Estás seguro?')">
+							<i class="fa fa-trash"></i>
+							ELIMINAR
+						</a>
+					</button>
+				</div>
+				<br><br>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

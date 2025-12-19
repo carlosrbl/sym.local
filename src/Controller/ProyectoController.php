@@ -45,16 +45,4 @@ final class ProyectoController extends AbstractController
     {
         return $this->render('contact.view.html.twig');
     }
-    #[Route('/registro', name: 'app_registro')]
-    public function registro() {}
-    #[Route('/login', name: 'app_login')]
-    public function login() {}
-    #[Route('/galeria', name: 'app_galeria')]
-    public function galeria() {}
-    #[Route('/exposiciones', name: 'app_exposiciones')]
-    public function exposiciones() {}
-    #[Route('/asociados', name: 'app_asociados')]
-    public function asociados() {}
-    #[Route('/logout', name: 'app_logout')]
-    public function logout() {}
 }

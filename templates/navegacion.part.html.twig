@@ -19,7 +19,7 @@
 					{% else %}
 						<li class="lien">
 						{% endif %}
-						<a href={{ path('app_index') }}>
+						<a href="{{ path('app_index') }}">
 							<i class="fa fa-windows sr-icons"></i>
 							Home</a>
 					</li>
@@ -29,92 +29,42 @@
 						{% else %}
 							<li class="lien">
 							{% endif %}
-							<a href={{ path('app_about') }}>
+							<a href="{{ path('app_about') }}">
 								<i class="fa fa-bookmark sr-icons"></i>
 								About</a>
 						</li>
 
-						{% if app.request.pathinfo=='/registro' %}
+						{% if app.request.pathinfo=='/galeria' %}
 							<li class="active lien">
 							{% else %}
 								<li class="lien">
 								{% endif %}
-								<a href={{ path('app_registro') }}>
-									<i class="fa fa-user sr-icons"></i>
-									Registro</a>
+								<a href="{{ path('app_galeria') }}">
+									<i class="fa fa-photo sr-icons"></i>
+									Galeria</a>
 							</li>
 
-							{% if app.request.pathinfo=='/login' %}
+							{% if app.request.pathinfo=='/blog' %}
 								<li class="active lien">
 								{% else %}
 									<li class="lien">
 									{% endif %}
-									<a href={{ path('app_login') }}>
-										<i class="fa fa-sign-in sr-icons"></i>
-										Login</a>
+									<a href="{{ path('app_blog') }}">
+										<i class="fa fa-file-text sr-icons"></i>
+										Blog</a>
 								</li>
 
-								{% if app.request.pathinfo=='/galeria' %}
+								{% if app.request.pathinfo=='/contact' %}
 									<li class="active lien">
 									{% else %}
 										<li class="lien">
 										{% endif %}
-										<a href={{ path('app_galeria') }}>
-											<i class="fa fa-photo sr-icons"></i>
-											Galeria</a>
+										<a href="{{ path('app_contact') }}">
+											<i class="fa fa-envelope sr-icons"></i>
+											Contact</a>
 									</li>
-
-									{% if app.request.pathinfo=='/exposiciones' %}
-										<li class="active lien">
-										{% else %}
-											<li class="lien">
-											{% endif %}
-											<a href={{ path('app_exposiciones') }}>
-												<i class="fa fa-book sr-icons"></i>
-												Exposiciones</a>
-										</li>
-
-										{% if app.request.pathinfo=='/asociados' %}
-											<li class="active lien">
-											{% else %}
-												<li class="lien">
-												{% endif %}
-												<a href={{ path('app_asociados') }}>
-													<i class="fa fa-cloud sr-icons"></i>
-													Asociados</a>
-											</li>
-
-											{% if app.request.pathinfo=='/logout' %}
-												<li class="active lien">
-												{% else %}
-													<li class="lien">
-													{% endif %}
-													<a href={{ path('app_logout') }}>
-														<i class="fa fa-sign-out sr-icons"></i>
-														Logout</a>
-												</li>
-
-												{% if app.request.pathinfo=='/blog' %}
-													<li class="active lien">
-													{% else %}
-														<li class="lien">
-														{% endif %}
-														<a href={{ path('app_blog') }}>
-															<i class="fa fa-file-text sr-icons"></i>
-															Blog</a>
-													</li>
-
-													{% if app.request.pathinfo=='/contact' %}
-														<li class="active lien">
-														{% else %}
-															<li class="lien">
-															{% endif %}
-															<a href={{ path('app_contact') }}>
-																<i class="fa fa-envelope sr-icons"></i>
-																Contact</a>
-														</li>
-														<!-- End of Navigation Bar -->
-													</ul>
-												</div>
-											</div>
-										</nav>
+									<!-- End of Navigation Bar -->
+								</ul>
+							</div>
+						</div>
+					</nav>
