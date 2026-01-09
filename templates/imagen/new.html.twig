@@ -1,0 +1,8 @@
+{% extends 'base.html.twig' %}
+{% block principal %}
+    <h1>Create new Imagen</h1>
+
+    {{ include('imagen/_form.html.twig') }}
+
+    <a class="btn btn-info" style="color: black; width: 150px; height: 35px; border: 1px solid black;" href="{{ path('app_imagen_index') }}">VOLVER ATRÁS</a>
+{% endblock %}

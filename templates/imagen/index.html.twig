@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+{% block principal %}
+	<h1>Imagen index</h1>
+
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Imagen</th>
+				<th>Nombre</th>
+				<th>Descripcion</th>
+				<th>Categoria</th>
+				<th>NumVisualizaciones</th>
+				<th>NumLikes</th>
+				<th>NumDownloads</th>
+				<th>actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for imagen in imagens %}
+				<tr>
+					<td>{{ imagen.id }}</td>
+					<td><img style="height: 100px; width: 200px; border-radius: 10px" src="{{ asset(imagen.getUrlSubidas()) }}"/></td>
+					<td>{{ imagen.nombre }}</td>
+					<td>{{ imagen.descripcion }}</td>
+					<td>{{ imagen.categoria }}</td>
+					<td>{{ imagen.numVisualizaciones }}</td>
+					<td>{{ imagen.numLikes }}</td>
+					<td>{{ imagen.numDownloads }}</td>
+					<td class="btn btn-primary" style="border: 1px solid black;">
+						<a style="color: black" href="{{ path('app_imagen_show', {'id': imagen.id}) }}">MOSTRAR</a>
+					</td>
+					<td class="btn btn-warning" style="border: 1px solid black;">
+						<a style="color: black" href="{{ path('app_imagen_edit', {'id': imagen.id}) }}">EDITAR</a>
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="8">no records found</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+	<a class="btn btn-info" style="color: black; width: 150px; height: 35px; border: 1px solid black;" href="{{ path('app_imagen_new') }}">CREAR NUEVO</a>
+{% endblock %}

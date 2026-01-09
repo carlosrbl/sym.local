@@ -18,6 +18,9 @@ class Imagen
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $descripcion = null;
+    
+    #[ORM\Column(length: 255)]
+    private ?string $password = null;
 
     #[ORM\Column]
     private ?int $categoria = null;
@@ -31,11 +34,12 @@ class Imagen
     #[ORM\Column]
     private ?int $numDownloads = null;
 
-    public function __construct($nombre = "", $descripcion = "", $categoria = 1, $numVisualizaciones = 0, $numLikes = 0, $numDownloads = 0)
+    public function __construct($nombre = "", $descripcion = "", $password = "", $categoria = 1, $numVisualizaciones = 0, $numLikes = 0, $numDownloads = 0)
     {
         $this->id = null;
         $this->nombre = $nombre;
         $this->descripcion = $descripcion;
+        $this->password = $password;
         $this->categoria = $categoria;
         $this->numVisualizaciones = $numVisualizaciones;
         $this->numLikes = $numLikes;
@@ -55,6 +59,18 @@ class Imagen
     public function setNombre(string $nombre): static
     {
         $this->nombre = $nombre;
+
+        return $this;
+    }
+    
+    public function getPassword(): ?string
+    {
+        return $this->password;
+    }
+
+    public function setPassword(string $password): static
+    {
+        $this->password = $password;
 
         return $this;
     }

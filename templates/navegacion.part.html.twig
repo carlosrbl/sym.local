@@ -34,12 +34,12 @@
 								About</a>
 						</li>
 
-						{% if app.request.pathinfo=='/galeria' %}
+						{% if app.request.pathinfo=='/imagen' %}
 							<li class="active lien">
 							{% else %}
 								<li class="lien">
 								{% endif %}
-								<a href="{{ path('app_galeria') }}">
+								<a href="{{ path('app_imagen_index') }}">
 									<i class="fa fa-photo sr-icons"></i>
 									Galeria</a>
 							</li>
