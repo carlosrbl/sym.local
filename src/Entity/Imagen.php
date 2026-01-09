@@ -4,21 +4,28 @@ namespace App\Entity;
 
 use App\Repository\ImagenRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ImagenRepository::class)]
 class Imagen
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
+
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 50)]
+    #[ORM\Column(length: 255)]
+    #[Assert\File(
+        mimeTypes: ["image/jpeg", "image/png"],
+        mimeTypesMessage: "Solamente se permiten archivos jpeg o png."
+    )]
+    
     private ?string $nombre = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $descripcion = null;
-    
+
     #[ORM\Column(length: 255)]
     private ?string $password = null;
 
@@ -62,7 +69,7 @@ class Imagen
 
         return $this;
     }
-    
+
     public function getPassword(): ?string
     {
         return $this->password;
