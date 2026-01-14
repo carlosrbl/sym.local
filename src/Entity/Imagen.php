@@ -20,7 +20,7 @@ class Imagen
         mimeTypes: ["image/jpeg", "image/png"],
         mimeTypesMessage: "Solamente se permiten archivos jpeg o png."
     )]
-    
+
     private ?string $nombre = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -28,9 +28,6 @@ class Imagen
 
     #[ORM\Column(length: 255)]
     private ?string $password = null;
-
-    #[ORM\Column]
-    private ?int $categoria = null;
 
     #[ORM\Column]
     private ?int $numVisualizaciones = null;
@@ -41,16 +38,24 @@ class Imagen
     #[ORM\Column]
     private ?int $numDownloads = null;
 
-    public function __construct($nombre = "", $descripcion = "", $password = "", $categoria = 1, $numVisualizaciones = 0, $numLikes = 0, $numDownloads = 0)
+    #[ORM\ManyToOne(inversedBy: 'imagens', targetEntity: Categoria::class)]
+    #[ORM\JoinColumn(nullable: true)]
+    private ?Categoria $categoria = null;
+
+    public function __construct($nombre = "", $descripcion = "", $password = "", $numVisualizaciones = 0, $numLikes = 0, $numDownloads = 0)
     {
         $this->id = null;
         $this->nombre = $nombre;
         $this->descripcion = $descripcion;
         $this->password = $password;
-        $this->categoria = $categoria;
         $this->numVisualizaciones = $numVisualizaciones;
         $this->numLikes = $numLikes;
         $this->numDownloads = $numDownloads;
+    }
+
+    public function __toString(): string
+    {
+        return $this->descripcion;
     }
 
     public function getId(): ?int
@@ -94,18 +99,6 @@ class Imagen
         return $this;
     }
 
-    public function getCategoria(): ?int
-    {
-        return $this->categoria;
-    }
-
-    public function setCategoria(int $categoria): static
-    {
-        $this->categoria = $categoria;
-
-        return $this;
-    }
-
     public function getNumVisualizaciones(): ?int
     {
         return $this->numVisualizaciones;
@@ -141,10 +134,16 @@ class Imagen
 
         return $this;
     }
-
-    public function __toString(): string
+    public function getCategoria(): ?Categoria
     {
-        return $this->descripcion;
+        return $this->categoria;
+    }
+
+    public function setCategoria(?Categoria $categoria): static
+    {
+        $this->categoria = $categoria;
+
+        return $this;
     }
 
     const RUTA_IMAGENES_PORTFOLIO = 'images/index/portfolio/';

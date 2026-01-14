@@ -3,13 +3,14 @@
 namespace App\Form;
 
 use App\Entity\Imagen;
+use App\Entity\Categoria;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 
@@ -22,6 +23,7 @@ class ImagenType extends AbstractType
                 'label' => 'Nombre imagen (JPG o PNG)',
                 'label_attr' => ['class' => 'etiqueta'],
                 'data_class' => null,
+                'required' => true,
                 'constraints' => [
                     new File([
                         'maxSize' => '1024k',
@@ -34,7 +36,10 @@ class ImagenType extends AbstractType
                 ],
             ])
             ->add('descripcion', TextType::class, ['required' => false])
-            ->add('categoria', NumberType::class, ['required' => false])
+            ->add('categoria', EntityType::class, [
+                'class' => Categoria::class,
+                'required' => true
+            ])
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'invalid_message' => 'Las contraseñas deben coincidir.',

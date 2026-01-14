@@ -16,6 +16,15 @@ class ImagenRepository extends ServiceEntityRepository
         parent::__construct($registry, Imagen::class);
     }
 
+    public function findImagenesConCategoria(string $ordenacion, string $tipoOrdenacion)
+    {
+        $qb = $this->createQueryBuilder('imagen');
+        $qb->addSelect('categoria')
+            ->innerJoin('imagen.categoria', 'categoria')
+            ->orderBy('imagen.' . $ordenacion, $tipoOrdenacion);
+        return $qb->getQuery()->getResult();
+    }
+    
     public function remove(Imagen $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
