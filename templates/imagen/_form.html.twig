@@ -18,7 +18,7 @@
 		<div
 			class="col-md-12">
 			{# He añadido 'attr': {'class': 'form-control'} por seguridad, 
-			               para forzar que el select ocupe el 100% del ancho #}
+												               para forzar que el select ocupe el 100% del ancho #}
 			{{ form_row(form.categoria, {
                 'label':'Categoría:',
                 'label_attr': {'class':'etiqueta'},
@@ -36,6 +36,13 @@
 		</div>
 	</div>
 
+	{# Fila para FECHA #}
+	<div class="row">
+		<div class="col-md-12">
+			{{ form_row(form.fecha,{'label':'Fecha de creación:','label_attr': {'class':'etiqueta'}}) }}
+		</div>
+	</div>
+
 	{# Fila para PASSWORD #}
 	<div class="row">
 		<div class="col-md-12">
@@ -50,4 +57,6 @@
 		<button class="btn">{{ button_label|default('Save') }}</button>
 		{{ form_end(form) }}
 	</div>
+
+	{{ form_errors(form) }}
 </div>

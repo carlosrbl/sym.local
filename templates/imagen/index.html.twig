@@ -4,9 +4,18 @@
 
 	<form action="{{ path('app_imagen_index_busqueda') }}" method="post">
 		<label>Búsqueda:</label>
-		<input type="text" name="busqueda" id="busqueda" value="">
+		<input type="text" name="busqueda" id="busqueda" value="{{ busqueda | default('') }}">
+		<input type="date" name="fechaInicial" id="fechaInicial" value="{{ fechaInicial | default('') }}">
+		<input type="date" name="fechaFinal" id="fechaFinal" value="{{ fechaFinal | default('') }}">
 		<input type="submit" value="Buscar">
+		<a href="{{ path('app_imagen_index') }}" class="btn btn-success" style="border: 1px solid black; color: black;">Limpiar</a>
 	</form>
+
+	{% for message in app.flashes('mensaje') %}
+		<div class="alert alert-primary" role="alert">
+			{{ message }}
+		</div>
+	{% endfor %}
 
 	<table class="table">
 		<thead>
@@ -22,10 +31,11 @@
 				<th>
 					<a href="{{ path("app_imagen_index_ordenado", {ordenacion: 'categoria'}) }}">Categoria</a>
 				</th>
+				<th>Fecha de creación</th>
 				<th>NumVisualizaciones</th>
 				<th>NumLikes</th>
 				<th>NumDownloads</th>
-				<th>actions</th>
+				<th>Actions</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -36,6 +46,7 @@
 					<td>{{ imagen.nombre }}</td>
 					<td>{{ imagen.descripcion }}</td>
 					<td>{{ imagen.categoria }}</td>
+					<td>{{ imagen.fecha | date('d/m/Y') }}</td>
 					<td>{{ imagen.numVisualizaciones }}</td>
 					<td>{{ imagen.numLikes }}</td>
 					<td>{{ imagen.numDownloads }}</td>

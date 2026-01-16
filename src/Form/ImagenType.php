@@ -9,6 +9,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -47,6 +48,10 @@ class ImagenType extends AbstractType
                 'first_options' => ['label' => 'Password', 'label_attr' => ['class' => 'etiqueta']],
                 'second_options' => ['label' => 'Repetir Password', 'label_attr' => ['class' => 'etiqueta']],
             ])
+            ->add('fecha', DateType::class, [
+                'widget' => 'single_text'
+            ])
+
         ;
     }
 

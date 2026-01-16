@@ -2,9 +2,10 @@
 
 namespace App\Repository;
 
+use DateTime;
 use App\Entity\Imagen;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<Imagen>
@@ -24,7 +25,7 @@ class ImagenRepository extends ServiceEntityRepository
             ->orderBy('imagen.' . $ordenacion, $tipoOrdenacion);
         return $qb->getQuery()->getResult();
     }
-    
+
     public function remove(Imagen $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
@@ -36,12 +37,33 @@ class ImagenRepository extends ServiceEntityRepository
     /**
      * @return Imagen[] Returns an array of Imagen objects
      */
-    public function findLikeDescripcion(string $value): array
+    public function findImagenes(string $descripcion, string $fechaInicial, $fechaFinal): array
     {
         $qb = $this->createQueryBuilder('i');
-        $qb->Where($qb->expr()->like('i.descripcion', ':val'))->setParameter('val', '%' . $value . '%');
+        if (!is_null($descripcion) && $descripcion !== '') {
+            $qb->andWhere(
+                $qb->expr()->orX(
+                    $qb->expr()->like('i.descripcion', ':val'),
+                    $qb->expr()->like('i.nombre', ':val')
+                )
+            )
+                ->setParameter('val', '%' . $descripcion . '%');
+        }
+        if (!is_null($fechaInicial) && $fechaInicial !== '') {
+            $dtFechaInicial = DateTime::createFromFormat('Y-m-d', $fechaInicial);
+            $dtFechaInicial->setTime(0, 0, 0);
+            $qb->andWhere($qb->expr()->gte('i.fecha', ':fechaInicial'))
+                ->setParameter('fechaInicial', $dtFechaInicial);
+        }
+        if (!is_null($fechaFinal) && $fechaFinal !== '') {
+            $dtFechaFinal = DateTime::createFromFormat('Y-m-d', $fechaFinal);
+            $dtFechaFinal->setTime(0, 0, 0);
+            $qb->andWhere($qb->expr()->lte('i.fecha', ':fechaFinal'))
+                ->setParameter('fechaFinal', $dtFechaFinal);
+        }
         return $qb->getQuery()->getResult();
     }
+
 
     //    /**
     //     * @return Imagen[] Returns an array of Imagen objects
