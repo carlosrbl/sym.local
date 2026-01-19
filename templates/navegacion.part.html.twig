@@ -63,8 +63,37 @@
 											<i class="fa fa-envelope sr-icons"></i>
 											Contact</a>
 									</li>
-									<!-- End of Navigation Bar -->
-								</ul>
-							</div>
-						</div>
-					</nav>
+
+									{% if app.request.pathinfo=='/register' %}
+										<li class="active lien">
+										{% else %}
+											<li class="lien">
+											{% endif %}
+											<a href="{{ path('app_register') }}">
+												<i class="fa fa-user sr-icons"></i>
+												Register</a>
+										</li>
+
+										{% if is_granted('IS_AUTHENTICATED') %}
+											<li class=" lien">
+												<a href={{ path('app_logout') }}>
+													<i class="fa fa-sign-out sr-icons"></i>
+													Logout -
+													{{ app.user.username }}</a>
+											</li>
+										{% else %}
+											{% if app.request.pathinfo=='/login' %}
+												<li class="active lien">
+												{% else %}
+													<li class="lien">
+													{% endif %}
+													<a href={{ path('app_login') }}>
+														<i class="fa fa-sign-in sr-icons"></i>
+														Login</a>
+												</li>
+											{% endif %}
+											<!-- End of Navigation Bar -->
+										</ul>
+									</div>
+								</div>
+							</nav>
