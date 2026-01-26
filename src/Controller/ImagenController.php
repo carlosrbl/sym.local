@@ -44,6 +44,10 @@ final class ImagenController extends AbstractController
             // Actualizamos el nombre del archivo en el objeto imagen al nuevo generado
             $imagen->setNombre($fileName);
 
+            //Actualizamos el id del usuario que añade la imagen
+            $usuario = $this->getUser();
+            $imagen->setUsuario($usuario);
+
             $entityManager->persist($imagen);
             $entityManager->flush();
 
@@ -64,7 +68,8 @@ final class ImagenController extends AbstractController
         $busqueda = $request->request->get('busqueda');
         $fechaInicial = $request->request->get('fechaInicial');
         $fechaFinal = $request->request->get('fechaFinal');
-        $imagenes = $imagenRepository->findImagenes($busqueda, $fechaInicial, $fechaFinal);
+        $usuarioLogueado = $this->getUser();
+        $imagenes = $imagenRepository->findImagenes($busqueda, $fechaInicial, $fechaFinal, $usuarioLogueado);
         return $this->render('imagen/index.html.twig', [
             'imagens' => $imagenes,
             'busqueda' => $busqueda,
@@ -102,6 +107,7 @@ final class ImagenController extends AbstractController
     #[Route('/delete/{id}', name: 'app_imagen_delete', methods: ['POST'])]
     public function delete(Request $request, Imagen $imagen, EntityManagerInterface $entityManager): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         if ($this->isCsrfTokenValid('delete' . $imagen->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($imagen);
             $entityManager->flush();
@@ -113,6 +119,7 @@ final class ImagenController extends AbstractController
     #[Route('/delete/{id}', name: 'app_imagen_delete_json', methods: ['DELETE'])]
     public function deleteJson(Imagen $imagen, ImagenRepository $imagenRepository): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $imagenRepository->remove($imagen, true);
         return new JsonResponse(['eliminado' => true]);
     }

@@ -2,17 +2,20 @@
 
 namespace App\BLL;
 
-use Symfony\Component\HttpFoundation\RequestStack;
 use App\Repository\ImagenRepository;
+use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class ImagenBLL
 {
     private RequestStack $requestStack;
     private ImagenRepository $imagenRepository;
-    public function __construct(RequestStack $requestStack, ImagenRepository $imagenRepository)
+    private Security $security;
+    public function __construct(RequestStack $requestStack, ImagenRepository $imagenRepository, Security $security)
     {
         $this->requestStack = $requestStack;
         $this->imagenRepository = $imagenRepository;
+        $this->security = $security;
     }
     public function getImagenesConOrdenacion(?string $ordenacion)
     {
@@ -35,6 +38,7 @@ class ImagenBLL
             $ordenacion = 'id';
             $tipoOrdenacion = 'asc';
         }
-        return $this->imagenRepository->findImagenesConCategoria($ordenacion, $tipoOrdenacion);
+        $usuarioLogueado = $this->security->getUser();
+        return $this->imagenRepository->findImagenesConCategoria($ordenacion, $tipoOrdenacion, $usuarioLogueado);
     }
 }
