@@ -2,21 +2,15 @@
 
 namespace App\BLL;
 
-use App\Repository\ImagenRepository;
+use DateTime;
+use App\Entity\User;
+use App\Entity\Imagen;
+use App\Entity\Categoria;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\RequestStack;
 
-class ImagenBLL
+class ImagenBLL extends BaseBLL
 {
-    private RequestStack $requestStack;
-    private ImagenRepository $imagenRepository;
-    private Security $security;
-    public function __construct(RequestStack $requestStack, ImagenRepository $imagenRepository, Security $security)
-    {
-        $this->requestStack = $requestStack;
-        $this->imagenRepository = $imagenRepository;
-        $this->security = $security;
-    }
     public function getImagenesConOrdenacion(?string $ordenacion)
     {
         if (!is_null($ordenacion)) { // Cuando se establece un tipo de ordenación específico
@@ -40,5 +34,50 @@ class ImagenBLL
         }
         $usuarioLogueado = $this->security->getUser();
         return $this->imagenRepository->findImagenesConCategoria($ordenacion, $tipoOrdenacion, $usuarioLogueado);
+    }
+    public function nueva(array $data)
+    {
+        $imagen = new Imagen();
+        $imagen->setNombre($data['nombre']);
+        $imagen->setDescripcion($data['descripcion']);
+        $imagen->setNumVisualizaciones($data['numVisualizaciones']);
+        $imagen->setNumLikes($data['numLikes']);
+        $imagen->setNumDownloads($data['numDownloads']);
+        // El id de la categoria, la tenemos que busar en su BBDD
+        $categoria = $this->em->getRepository(Categoria::class)->find($data['categoria']);
+        $imagen->setCategoria($categoria);
+        $fecha = DateTime::createFromFormat('d/m/Y', $data['fecha']);
+        $imagen->setFecha($fecha);
+        $usuario = $this->em->getRepository(User::class)->find($data['usuario']);
+        $imagen->setUsuario($usuario);
+        return $this->guardaValidando($imagen);
+    }
+    public function setRequestStack(RequestStack $requestStack)
+    {
+        $this->requestStack = $requestStack;
+    }
+    public function setSecurity(Security $security)
+    {
+        $this->security = $security;
+    }
+    public function toArray($imagen): ?array
+    {
+        if ($imagen !== null && !$imagen instanceof Imagen) {
+            return null;
+        }
+
+        if (is_null($imagen))
+            return null;
+        return [
+            'id' => $imagen->getId(),
+            'nombre' => $imagen->getNombre(),
+            'descripcion' => $imagen->getDescripcion(),
+            'categoria' => $imagen->getCategoria()->getNombre(),
+            'numLikes' => $imagen->getNumLikes(),
+            'numVisualizaciones' => $imagen->getNumVisualizaciones(),
+            'numDownloads' => $imagen->getNumDownloads(),
+            'fecha' => is_null($imagen->getFecha()) ? '' : $imagen->getFecha()->format('d/m/Y'),
+            'usuario' => $imagen->getUsuario()->getId()
+        ];
     }
 }

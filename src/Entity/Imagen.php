@@ -2,10 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\ImagenRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\ImagenRepository;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 #[ORM\Entity(repositoryClass: ImagenRepository::class)]
 class Imagen
@@ -17,12 +18,14 @@ class Imagen
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank] // (Opcional) Para asegurar que tenga nombre
+    private ?string $nombre = null;
+
     #[Assert\File(
         mimeTypes: ["image/jpeg", "image/png"],
         mimeTypesMessage: "Solamente se permiten archivos jpeg o png."
     )]
-
-    private ?string $nombre = null;
+    private ?UploadedFile $file = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $descripcion = null;
@@ -80,6 +83,17 @@ class Imagen
     {
         $this->nombre = $nombre;
 
+        return $this;
+    }
+
+    public function getFile(): ?UploadedFile
+    {
+        return $this->file;
+    }
+
+    public function setFile(?UploadedFile $file): static
+    {
+        $this->file = $file;
         return $this;
     }
 
