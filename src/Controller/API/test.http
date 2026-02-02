@@ -10,6 +10,14 @@ Content-Type: application/json
 GET http://sym.local/api/imagenesapi
 Content-Type: application/json
 
+### GET para obtener todos los datos ordenados
+GET http://sym.local/api/imagenesapi/ordenadas/descripcion
+Content-Type: application/json
+
+### GET para obtener datos filtrados
+GET http://sym.local/api/imagenesapi/ordenadas/id?fechaInicial=2024-01-03&descripcion=imag
+Content-Type: application/json
+
 ### DELETE de una imagen
 DELETE http://sym.local/api/imagenesapi/13
 Content-Type: application/json

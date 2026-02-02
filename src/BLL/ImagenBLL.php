@@ -40,9 +40,16 @@ class ImagenBLL extends BaseBLL
         $imagen = new Imagen();
         return $this->actualizaImagen($imagen, $data);
     }
-    public function getImagenes()
+    public function getImagenes(?string $order, ?string $descripcion, ?string $fechaInicial, ?string
+    $fechaFinal)
     {
-        $imagenes = $this->em->getRepository(Imagen::class)->findAll();
+        $imagenes = $this->em->getRepository(Imagen::class)->findImagenes(
+            $order,
+            $descripcion,
+            $fechaInicial,
+            $fechaFinal,
+            $usuario = null
+        );
         return $this->entitiesToArray($imagenes);
     }
     public function setRequestStack(RequestStack $requestStack)

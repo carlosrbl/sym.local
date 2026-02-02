@@ -28,9 +28,13 @@ class ImagenApiController extends BaseApiController
     }
 
     #[Route('/imagenesapi', name: 'api_get_imagenes', methods: ['GET'])]
-    public function getAll(Request $request, ImagenBLL $imagenBLL)
+    #[Route('/imagenesapi/ordenadas/{order}', name: 'api_get_imagenes_ordenadas', methods: ['GET'])]
+    public function getAll(Request $request, ImagenBLL $imagenBLL, $order = 'id')
     {
-        $imagenes = $imagenBLL->getImagenes();
+        $descripcion = $request->query->get('descripcion');
+        $fechaInicial = $request->query->get('fechaInicial');
+        $fechaFinal = $request->query->get('fechaFinal');
+        $imagenes = $imagenBLL->getImagenes($order, $descripcion, $fechaInicial, $fechaFinal);
         return $this->getResponse($imagenes);
     }
 
