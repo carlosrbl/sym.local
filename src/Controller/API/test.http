@@ -1,5 +1,17 @@
+### GET de una imagen
+GET http://sym.local/api/imagenesapi/13
+Content-Type: application/json
+
 ### Petición GET
 GET http://sym.local/api/prueba
+Content-Type: application/json
+
+### GET de todas las imágenes
+GET http://sym.local/api/imagenesapi
+Content-Type: application/json
+
+### DELETE de una imagen
+DELETE http://sym.local/api/imagenesapi/13
 Content-Type: application/json
 
 ### Send POST request with json body
@@ -15,4 +27,19 @@ Content-Type: application/json
  "categoria": "2",
  "usuario": "1",
  "fecha": "20/01/2024"
+}
+
+### PUT de actualización de una imagen
+PUT http://sym.local/api/imagenesapi/14
+Content-Type: application/json
+
+{
+ "nombre": "imagen post 8 actualizado",
+ "descripcion": "esta es la imagen post 8 actualizado",
+ "numVisualizaciones": "11",
+ "numLikes": "22",
+ "numDownloads": "33",
+ "categoria": "1",
+ "fecha": "02/02/2024",
+ "usuario": "1"
 }

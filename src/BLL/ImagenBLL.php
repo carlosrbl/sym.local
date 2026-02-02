@@ -38,19 +38,12 @@ class ImagenBLL extends BaseBLL
     public function nueva(array $data)
     {
         $imagen = new Imagen();
-        $imagen->setNombre($data['nombre']);
-        $imagen->setDescripcion($data['descripcion']);
-        $imagen->setNumVisualizaciones($data['numVisualizaciones']);
-        $imagen->setNumLikes($data['numLikes']);
-        $imagen->setNumDownloads($data['numDownloads']);
-        // El id de la categoria, la tenemos que busar en su BBDD
-        $categoria = $this->em->getRepository(Categoria::class)->find($data['categoria']);
-        $imagen->setCategoria($categoria);
-        $fecha = DateTime::createFromFormat('d/m/Y', $data['fecha']);
-        $imagen->setFecha($fecha);
-        $usuario = $this->em->getRepository(User::class)->find($data['usuario']);
-        $imagen->setUsuario($usuario);
-        return $this->guardaValidando($imagen);
+        return $this->actualizaImagen($imagen, $data);
+    }
+    public function getImagenes()
+    {
+        $imagenes = $this->em->getRepository(Imagen::class)->findAll();
+        return $this->entitiesToArray($imagenes);
     }
     public function setRequestStack(RequestStack $requestStack)
     {
