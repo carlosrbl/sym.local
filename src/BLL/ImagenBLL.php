@@ -2,10 +2,7 @@
 
 namespace App\BLL;
 
-use DateTime;
-use App\Entity\User;
 use App\Entity\Imagen;
-use App\Entity\Categoria;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\RequestStack;
 

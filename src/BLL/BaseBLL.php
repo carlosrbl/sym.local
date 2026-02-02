@@ -12,6 +12,7 @@ use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 abstract class BaseBLL
 {
@@ -20,15 +21,18 @@ abstract class BaseBLL
     protected RequestStack $requestStack;
     protected Security $security;
     protected ImagenRepository $imagenRepository;
+    protected UserPasswordHasherInterface $encoder;
     public function __construct(
         EntityManagerInterface $em,
         ValidatorInterface $validator,
+        UserPasswordHasherInterface $encoder,
         RequestStack $requestStack,
         Security $security,
         ImagenRepository $imagenRepository
     ) {
         $this->em = $em;
         $this->validator = $validator;
+        $this->encoder = $encoder;
         $this->requestStack = $requestStack;
         $this->security = $security;
         $this->imagenRepository = $imagenRepository;
