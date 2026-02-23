@@ -61,3 +61,17 @@ Content-Type: application/json
  "fecha": "02/02/2024",
  "usuario": "1"
 }
+
+### 1. POST - Login (Obtener el Token JWT)
+POST http://sym.local/api/auth/login_check
+Content-Type: application/json
+
+{
+    "username": "admin",
+    "password": "a"
+}
+
+### 2. GET - Probar una ruta protegida
+GET http://sym.local/api/alguna_ruta_protegida
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE3NzE4Mzk1ODEsImV4cCI6MTc3MTg0MzE4MSwicm9sZXMiOlsiUk9MRV9BRE1JTiIsIlJPTEVfVVNFUiJdLCJ1c2VybmFtZSI6ImFkbWluIn0.IHDjRnUX_FvDTPTWaVb_tmKmnA9svZaPAhzI5B5b5apDGJH6cgKw7Bc1psJ4gJQn82IAGZSuEv6x8K3-LnT0K0cyOM-hTdbDEaYzgfw0zXiJ3KQzBx6XYp6waKH5zdvSHCJyZ-LsS-u67Qpq7sC_61Pmc7w51NiL_c6GAhkJA7xtnNEFN0pgc5Fg5cCCe-RzevrYpHRbPELBVmZIlKiGBH_5TTqHRMb36anAhBXE5VYsN7AasZMhd2vVV8jZIFETFDKLVMMhOlAhyqpJm-c63nrdq0C-I_2i3PoP8fkViArg2hnZG0iup6VQYmdLfcC9j_vDr6LOwac9SvcKBhgweg
+Accept: application/json
