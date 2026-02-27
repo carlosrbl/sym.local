@@ -2,17 +2,18 @@
 
 namespace App\BLL;
 
-use DateTime;
-use App\Entity\User;
-use App\Entity\Imagen;
 use App\Entity\Categoria;
+use App\Entity\Imagen;
+use App\Entity\User;
 use App\Repository\ImagenRepository;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 abstract class BaseBLL
 {
@@ -22,13 +23,15 @@ abstract class BaseBLL
     protected Security $security;
     protected ImagenRepository $imagenRepository;
     protected UserPasswordHasherInterface $encoder;
+    protected TokenStorageInterface $tokenStorage;
     public function __construct(
         EntityManagerInterface $em,
         ValidatorInterface $validator,
         UserPasswordHasherInterface $encoder,
         RequestStack $requestStack,
         Security $security,
-        ImagenRepository $imagenRepository
+        ImagenRepository $imagenRepository,
+        TokenStorageInterface $tokenStorage
     ) {
         $this->em = $em;
         $this->validator = $validator;
@@ -36,6 +39,7 @@ abstract class BaseBLL
         $this->requestStack = $requestStack;
         $this->security = $security;
         $this->imagenRepository = $imagenRepository;
+        $this->tokenStorage = $tokenStorage;
     }
 
     protected function guardaValidando($entity): array
@@ -68,6 +72,17 @@ abstract class BaseBLL
             $arr[] = $this->toArray($entity);
         return $arr;
     }
+    protected function getUser(): User
+    {
+        return $this->tokenStorage->getToken()->getUser();
+    }
+    protected function checkRoleAdmin()
+    {
+        $usuario = $this->getUser();
+        if ($usuario->hasRole('ROLE_ADMIN') === true)
+            return true;
+        return false;
+    }
     public function actualizaImagen(Imagen $imagen, array $data)
     {
         $imagen->setNombre($data['nombre']);
@@ -80,7 +95,7 @@ abstract class BaseBLL
         $imagen->setCategoria($categoria);
         $fecha = DateTime::createFromFormat('d/m/Y', $data['fecha']);
         $imagen->setFecha($fecha);
-        $usuario = $this->em->getRepository(User::class)->find($data['usuario']);
+        $usuario = $this->getUser();
         $imagen->setUsuario($usuario);
         return $this->guardaValidando($imagen);
     }

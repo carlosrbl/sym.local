@@ -18,4 +18,18 @@ class UsuarioApiCotroller extends BaseApiController
         $user = $userBLL->nuevo($data['username'], $data['email'], $data['password']);
         return $this->getResponse($user, Response::HTTP_CREATED);
     }
+
+    /**
+     * @Route("/profile.{_format}",
+     * name="profile",
+     * requirements={"_format": "json"},
+     * defaults={"_format": "json"},
+     * methods={"GET"}
+     * )
+     */
+    public function profile(UsuarioBLL $usuarioBLL)
+    {
+        $usuario = $usuarioBLL->profile();
+        return $this->getResponse($usuario);
+    }
 }

@@ -5,6 +5,7 @@ namespace App\BLL;
 use App\Entity\Imagen;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 class ImagenBLL extends BaseBLL
 {
@@ -40,12 +41,13 @@ class ImagenBLL extends BaseBLL
     public function getImagenes(?string $order, ?string $descripcion, ?string $fechaInicial, ?string
     $fechaFinal)
     {
+        $usuario = $this->getUser();
         $imagenes = $this->em->getRepository(Imagen::class)->findImagenes(
             $order,
             $descripcion,
             $fechaInicial,
             $fechaFinal,
-            $usuario = null
+            $usuario
         );
         return $this->entitiesToArray($imagenes);
     }
@@ -56,6 +58,14 @@ class ImagenBLL extends BaseBLL
     public function setSecurity(Security $security)
     {
         $this->security = $security;
+    }
+    public function checkAccessToImagen(Imagen $imagen)
+    {
+        if ($this->checkRoleAdmin() === false) {
+            $usuario = $this->getUser();
+            if ($usuario->getId() !== $imagen->getUsuario()->getId())
+                throw new AccessDeniedHttpException();
+        }
     }
     public function toArray($imagen): ?array
     {

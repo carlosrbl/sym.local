@@ -27,4 +27,9 @@ class UsuarioBLL extends BaseBLL
             'roles' => $usuario->getRoles()
         ];
     }
+    public function profile()
+    {
+        $usuario = $this->getUser();
+        return $this->toArray($usuario);
+    }
 }

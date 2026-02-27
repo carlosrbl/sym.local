@@ -24,6 +24,7 @@ class ImagenApiController extends BaseApiController
     #[Route('/imagenesapi/{id}', name: 'api_get_imagen', requirements: ['id' => '\d+'], methods: ['GET'])]
     public function getOne(Imagen $imagen, ImagenBLL $imagenBLL)
     {
+        $imagenBLL->checkAccessToImagen($imagen);
         return $this->getResponse($imagenBLL->toArray($imagen));
     }
 

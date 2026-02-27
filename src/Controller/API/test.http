@@ -6,9 +6,10 @@ Content-Type: application/json
 GET http://sym.local/api/prueba
 Content-Type: application/json
 
-### GET de todas las imágenes
+### GET para obtener todas las imágenes del contacto logueado
 GET http://sym.local/api/imagenesapi
 Content-Type: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE3NzIxODQ1ODIsImV4cCI6MTc3MjE4ODE4Miwicm9sZXMiOlsiUk9MRV9BRE1JTiIsIlJPTEVfVVNFUiJdLCJ1c2VybmFtZSI6ImFkbWluIn0.JfBRIod4-WixZQ6E1OEWtEOoU3OqhquEtIMFNyFkedMqrmtCcFiekmQdNzjsAHrVJW1RDNwLw5_VcYW0qIkTNKwgsJg6ZNejCsoPqx48sS2tH-zkw6enF0c6tCAmlYXhcCqJnBxLge201-0bT-n8EM5YMFZkv2eyFs0Cglh1-N1wPHMkROvBkutsSByonQpGWHBaxjo_c8y7swCTcZPtkRFCyHAezXWzI5vdHydmY49mr0As013pcMruDDI5968_cUZO_fuyP7Obfq9qwoL103rL0Q319GnfCwpoLBdymDxjFVqOHY6z9Jkl_Fn3ZOYaJoZ7wYvMNNlU6HJgVnR_9A
 
 ### GET para obtener todos los datos ordenados
 GET http://sym.local/api/imagenesapi/ordenadas/descripcion
@@ -71,7 +72,27 @@ Content-Type: application/json
     "password": "a"
 }
 
-### 2. GET - Probar una ruta protegida
-GET http://sym.local/api/alguna_ruta_protegida
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE3NzE4Mzk1ODEsImV4cCI6MTc3MTg0MzE4MSwicm9sZXMiOlsiUk9MRV9BRE1JTiIsIlJPTEVfVVNFUiJdLCJ1c2VybmFtZSI6ImFkbWluIn0.IHDjRnUX_FvDTPTWaVb_tmKmnA9svZaPAhzI5B5b5apDGJH6cgKw7Bc1psJ4gJQn82IAGZSuEv6x8K3-LnT0K0cyOM-hTdbDEaYzgfw0zXiJ3KQzBx6XYp6waKH5zdvSHCJyZ-LsS-u67Qpq7sC_61Pmc7w51NiL_c6GAhkJA7xtnNEFN0pgc5Fg5cCCe-RzevrYpHRbPELBVmZIlKiGBH_5TTqHRMb36anAhBXE5VYsN7AasZMhd2vVV8jZIFETFDKLVMMhOlAhyqpJm-c63nrdq0C-I_2i3PoP8fkViArg2hnZG0iup6VQYmdLfcC9j_vDr6LOwac9SvcKBhgweg
-Accept: application/json
+### 2. POST - Probar una ruta protegida
+POST http://sym.local/api/imagenesapinueva
+Content-Type: application/json
+Authorization: Bearer ***
+
+{
+ "nombre": "dawpunch.png",
+ "descripcion": "esta es la imagen post 2",
+ "numVisualizaciones": "1",
+ "numLikes": "2",
+ "numDownloads": "3",
+ "categoria": "2",
+ "fecha": "02/02/2023"
+}
+
+### GET para obtener una imagen del contacto logueado
+GET http://sym.local/api/imagenesapi/14
+Content-Type: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE3NzIxODQ1ODIsImV4cCI6MTc3MjE4ODE4Miwicm9sZXMiOlsiUk9MRV9BRE1JTiIsIlJPTEVfVVNFUiJdLCJ1c2VybmFtZSI6ImFkbWluIn0.JfBRIod4-WixZQ6E1OEWtEOoU3OqhquEtIMFNyFkedMqrmtCcFiekmQdNzjsAHrVJW1RDNwLw5_VcYW0qIkTNKwgsJg6ZNejCsoPqx48sS2tH-zkw6enF0c6tCAmlYXhcCqJnBxLge201-0bT-n8EM5YMFZkv2eyFs0Cglh1-N1wPHMkROvBkutsSByonQpGWHBaxjo_c8y7swCTcZPtkRFCyHAezXWzI5vdHydmY49mr0As013pcMruDDI5968_cUZO_fuyP7Obfq9qwoL103rL0Q319GnfCwpoLBdymDxjFVqOHY6z9Jkl_Fn3ZOYaJoZ7wYvMNNlU6HJgVnR_9A
+
+### GET para obtener los datos de un usuario logueado
+GET http://sym.local/api/profile
+Content-Type: application/json
+Authorization: Bearer ***

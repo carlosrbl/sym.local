@@ -25,10 +25,6 @@ services:
     sym.bll.BaseBLL:
         class: App\BLL\BaseBLL
         abstract: true
-        arguments:
-            - '@doctrine.orm.entity_manager'
-            - '@validator'
-            - '@Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface'
     sym.bll.UsuarioBLL:
         class: App\BLL\UsuarioBLL
         parent: sym.bll.BaseBLL
