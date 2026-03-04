@@ -24,6 +24,8 @@ abstract class BaseBLL
     protected ImagenRepository $imagenRepository;
     protected UserPasswordHasherInterface $encoder;
     protected TokenStorageInterface $tokenStorage;
+    protected $images_directory_gallery;
+    protected $images_directory_portfolio;
     public function __construct(
         EntityManagerInterface $em,
         ValidatorInterface $validator,
@@ -31,7 +33,9 @@ abstract class BaseBLL
         RequestStack $requestStack,
         Security $security,
         ImagenRepository $imagenRepository,
-        TokenStorageInterface $tokenStorage
+        TokenStorageInterface $tokenStorage,
+        $images_directory_gallery,
+        $images_directory_portfolio
     ) {
         $this->em = $em;
         $this->validator = $validator;
@@ -40,6 +44,8 @@ abstract class BaseBLL
         $this->security = $security;
         $this->imagenRepository = $imagenRepository;
         $this->tokenStorage = $tokenStorage;
+        $this->images_directory_gallery = $images_directory_gallery;
+        $this->images_directory_portfolio = $images_directory_portfolio;
     }
 
     protected function guardaValidando($entity): array
@@ -85,7 +91,7 @@ abstract class BaseBLL
     }
     public function actualizaImagen(Imagen $imagen, array $data)
     {
-        $imagen->setNombre($data['nombre']);
+        $imagen->setNombre($this->getImagenGaleria($data));
         $imagen->setDescripcion($data['descripcion']);
         $imagen->setNumVisualizaciones($data['numVisualizaciones']);
         $imagen->setNumLikes($data['numLikes']);
@@ -98,6 +104,29 @@ abstract class BaseBLL
         $usuario = $this->getUser();
         $imagen->setUsuario($usuario);
         return $this->guardaValidando($imagen);
+    }
+    private function getImagenGaleria(array $data)
+    {
+        $arr_imagen = explode(',', $data['nombre']); // En imagen se encuentra la foto
+        if (count($arr_imagen) < 2)
+            throw new BadRequestHttpException('Formato de imagen incorrecto');
+        $imagen = base64_decode($arr_imagen[1]); // Decodificamos la imagen recibida
+        if (is_null($imagen))
+            throw new BadRequestHttpException('No se ha recibido la imagen');
+        $fileName = $arr_imagen[0]; // En nombre se pasa el nombre de la imagen con el que grabará
+        $filePath1 = $this->images_directory_gallery . $fileName;
+        $filePath2 = $this->images_directory_portfolio . $fileName;
+        $ifp1 = fopen($filePath1, "wb");
+        $ifp2 = fopen($filePath2, "wb");
+        if (!$ifp1 || !$ifp2)
+            throw new BadRequestHttpException('No se ha podido guardar la imagen');
+        $ok1 = fwrite($ifp1, $imagen);
+        $ok2 = fwrite($ifp2, $imagen);
+        if ($ok1 === false || $ok2 === false)
+            throw new BadRequestHttpException('No se ha podido guardar la imagen');
+        fclose($ifp1);
+        fclose($ifp2);
+        return $fileName;
     }
     public function delete($entity)
     {

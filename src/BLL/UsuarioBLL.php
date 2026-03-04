@@ -32,4 +32,10 @@ class UsuarioBLL extends BaseBLL
         $usuario = $this->getUser();
         return $this->toArray($usuario);
     }
+    public function cambiaPassword(string $nuevoPassword): array
+    {
+        $usuario = $this->getUser();
+        $usuario->setPassword($this->encoder->hashPassword($usuario, $nuevoPassword));
+        return $this->guardaValidando($usuario);
+    }
 }

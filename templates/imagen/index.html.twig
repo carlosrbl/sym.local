@@ -42,7 +42,7 @@
 			{% for imagen in imagens %}
 				<tr>
 					<td>{{ imagen.id }}</td>
-					<td><img style="height: 100px; width: 200px; border-radius: 10px" src="{{ asset(imagen.getUrlSubidas()) }}"/></td>
+					<td><img style="height: 100px; width: 200px; border-radius: 10px" src="{{ images_directory~asset(imagen.nombre) }}" alt="{{ imagen.nombre }}"/></td>
 					<td>{{ imagen.nombre }}</td>
 					<td>{{ imagen.descripcion }}</td>
 					<td>{{ imagen.categoria }}</td>
